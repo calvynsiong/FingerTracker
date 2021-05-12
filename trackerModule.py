@@ -17,7 +17,7 @@ class Detector():
         # When tracking is below confidence range, detection restarts
         self.hands = self.mpHands.Hands(
             self.mode, self.maxHands, self.detectionCon, self.trackCon)
-        # Drawing over hands
+        # Drawing over handsd
         self.mpDraw = mp.solutions.drawing_utils
 
     def findHands(self, frame, draw=True):
@@ -53,7 +53,7 @@ class Detector():
                 landmarkList.append([id, cx, cy])
                 # Checks for point indexes and draws circles around them if they match
                 if id in [4, 8, 12, 16, 20] and draw:
-                    cv.circle(frame, (cx, cy), 7, (0, 0, 0), -1)
+                    cv.circle(frame, (cx, cy), 7, (71, 99, 255), -1)
 
         return landmarkList
 
@@ -90,6 +90,7 @@ def main():
 
         cv.imshow("Video", frame)
         # # Stops the video when 20s reach or when letter d is pressed
+        # bitwise and evaluates cv.waitkey and if the second statement is true, it finally breaks it
         if cv.waitKey(1) & 0xFF == ord("d"):
             break
 
