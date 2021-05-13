@@ -55,7 +55,8 @@ while True:
                     landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
         # Second hand check
         if len(landmarkList) > 21:
-            fingers += [1 if (landmarkList[24][1] < landmarkList[23][1]) else 0]
+            fingers += [1 if (landmarkList[24][1] >
+                              landmarkList[23][1]) else 0]
             fingers += [1 if landmarkList[tipIds2[id]+20][2] <
                         landmarkList[tipIds2[id]+18][2] else 0 for id in range(1, 5)]
     print(fingers)
@@ -64,10 +65,14 @@ while True:
     fps = 1/(currTime-prevTime)
     prevTime = currTime
 
-    cv.putText(frame, f"FPS:{int(fps)}", (430, 50),
-               cv.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 1)
-    cv.putText(frame, f"fingers: {len([i for i in fingers if i==1])}", (430, 150),
+    cv.putText(frame, "Start with right hand first", (20, 50),
+               cv.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 0), 1)
+    cv.putText(frame, "(Yes I know second hand is broken)", (20, 80),
+               cv.FONT_HERSHEY_PLAIN, .7, (255, 0, 0), 1)
+    cv.putText(frame, f"FPS:{int(fps)}", (440, 50),
                cv.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 1)
+    cv.putText(frame, f"Fingers Open: {len([i for i in fingers if i==1])}", (440, 100),
+               cv.FONT_HERSHEY_PLAIN, 1.3, (255, 0, 0), 1)
     cv.imshow("Video", frame)
 
     if cv.waitKey(1) & 0xFF == ord("d"):
