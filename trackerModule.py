@@ -40,24 +40,26 @@ class Detector():
     def findPosition(self, frame, handNumber=0, draw=True):
         landmarkList = []
         if self.results.multi_hand_landmarks:
-            # Access specific hand with handNumber
-            myHand = self.results.multi_hand_landmarks[handNumber]
-            # List index and info of handLandmark.landmark (which has x,y,z coordinates) + lm will be x,y,z coordinates
-            # The index provides information about which landmark point it is
-            for id, lm in enumerate(myHand.landmark):
-                # Obtaining height,width and channel of image
-                h, w, channel = frame.shape
-                # Converting x and y coordinates of landmark properlyd
-                cx, cy = int(lm.x*w), int(lm.y*h)
-                # Append the location + id of the specific landmark points to the list
-                landmarkList.append([id, cx, cy])
-                # Checks for point indexes and draws circles around them if they match
-                if id in [4, 8, 12, 16, 20] and draw:
-                    cv.circle(frame, (cx, cy), 7, (71, 99, 255), -1)
+            for myHand in self.results.multi_hand_landmarks:
+                # Access specific hand with handNumber
+                # myHand = self.results.multi_hand_landmarks[handNumber]
+                # List index and info of handLandmark.landmark (which has x,y,z coordinates) + lm will be x,y,z coordinates
+                # The index provides information about which landmark point it is
+                for id, lm in enumerate(myHand.landmark):
+                    # Obtaining height,width and channel of image
+                    h, w, channel = frame.shape
+                    # Converting x and y coordinates of landmark properlyd
+                    cx, cy = int(lm.x*w), int(lm.y*h)
+                    # Append the location + id of the specific landmark points to the list
+                    landmarkList.append([id, cx, cy])
+                    # Checks for point indexes and draws circles around them if they match
+                    if id in [4, 8, 12, 16, 20] and draw:
+                        cv.circle(frame, (cx, cy), 10, (71, 99, 255), -1)
 
         return landmarkList
 
-            # To track 2 hands, replace myHand with ==> for myHand in self.results.multi_hand_landmarks:
+        # To track 2 hands, replace myHand with ==> for myHand in self.results.multi_hand_landmarks:
+
 
 def main():
 

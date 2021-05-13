@@ -31,10 +31,10 @@ while True:
     prevTime = currTime
 
     cv.putText(frame, f"Frame Rate:{str(int(fps))}", (0, 70),
-                cv.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 1)
+               cv.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 1)
 
     cv.imshow("Video", frame)
-        # # Stops the video when 20s reach or when letter d is pressed
-        # bitwise and evaluates cv.waitkey and if the second statement is true, it finally breaks it
+    # # Stops the video when 20s reach or when letter d is pressed
+    # bitwise and evaluates cv.waitkey and if the second statement is true, it finally breaks it
     if cv.waitKey(1) & 0xFF == ord("d"):
         break

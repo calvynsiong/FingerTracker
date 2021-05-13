@@ -33,6 +33,7 @@ currTime = 0
 prevTime = 0
 
 tipIds = [4, 8, 12, 16, 20]
+tipIds2 = [4, 8, 12, 16, 20]
 
 
 while True:
@@ -41,7 +42,8 @@ while True:
     # frame[0:200, 0:200] = overlayList[0]
 
     frame = detector.findHands(frame)
-    landmarkList = detector.findPosition(frame, draw=False)
+    landmarkList = detector.findPosition(frame)
+    # print(landmarkList)
 
     fingers = []
 
@@ -51,7 +53,12 @@ while True:
         fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
         fingers += [1 if landmarkList[tipIds[id]][2] <
                     landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
-        print(fingers)
+        # Second hand check
+        if len(landmarkList) > 21:
+            fingers += [1 if (landmarkList[24][1] < landmarkList[23][1]) else 0]
+            fingers += [1 if landmarkList[tipIds2[id]+20][2] <
+                        landmarkList[tipIds2[id]+18][2] else 0 for id in range(1, 5)]
+    print(fingers)
 
     currTime = time.time()
     fps = 1/(currTime-prevTime)
