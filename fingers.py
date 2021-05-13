@@ -98,7 +98,7 @@ while True:
         cv.putText(frame, f"{entry1}/{entry2}: undefined", (440, 120),
                    cv.FONT_HERSHEY_DUPLEX, .6, (0,0,0), 1)
 
-    cv.imshow("Video", frame)
+    cv.imshow("Dynamic two hand calculator", frame)
 
     if cv.waitKey(1) & 0xFF == ord("d"):
         break
