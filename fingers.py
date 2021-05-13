@@ -46,6 +46,9 @@ while True:
     # print(landmarkList)
 
     fingers = []
+    calc = []
+    entry1 = 0
+    entry2 = 0
 
     if landmarkList:
 
@@ -53,6 +56,9 @@ while True:
         # fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
         # fingers += [1 if landmarkList[tipIds[id]][2] <
         #             landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
+
+        # Creating a calculator
+
         # Second hand check
         if len(landmarkList) > 21:
             fingers = [1 if (landmarkList[4][1] < landmarkList[3][1]) else 0]
@@ -62,6 +68,8 @@ while True:
                               landmarkList[25][1]) else 0]
             fingers += [1 if landmarkList[tipIds2[id]+20][2] <
                         landmarkList[tipIds2[id]+18][2] else 0 for id in range(1, 5)]
+            entry1 = sum(fingers[5:])
+            entry2 = sum(fingers[0:5])
         else:
             fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
             fingers += [1 if landmarkList[tipIds[id]][2] <
@@ -78,8 +86,19 @@ while True:
                cv.FONT_HERSHEY_DUPLEX, .6, (0, 0, 0), 1)
     cv.putText(frame, f"FPS:{int(fps)}", (560, 20),
                cv.FONT_HERSHEY_DUPLEX, .5, (0, 0, 0), 1)
-    cv.putText(frame, f"Fingers Open: {len([i for i in fingers if i==1])}", (420, 50),
-               cv.FONT_HERSHEY_DUPLEX, .8, (26, 51, 0), 2)
+    cv.putText(frame, f"Fingers Open: {sum(fingers)}", (420, 50),
+               cv.FONT_HERSHEY_DUPLEX, .6, (26, 51, 0), 2)
+    cv.putText(frame, f"{entry1}-{entry2}: {entry1-entry2}", (440, 80),
+               cv.FONT_HERSHEY_DUPLEX, .6, (0,0,0), 1)
+    cv.putText(frame, f"{entry1}*{entry2}: {entry1*entry2}", (440, 100),
+               cv.FONT_HERSHEY_DUPLEX, .6, (0,0,0), 1)
+    try:
+        cv.putText(frame, f"{entry1}/{entry2}: {round(entry1/entry2,2)}", (440, 120),
+                   cv.FONT_HERSHEY_DUPLEX, .6, (0,0,0), 1)
+    except ZeroDivisionError:
+        cv.putText(frame, f"{entry1}/{entry2}: undefined", (440, 120),
+                   cv.FONT_HERSHEY_DUPLEX, .6, (0,0,0), 1)
+
     cv.imshow("Video", frame)
 
     if cv.waitKey(1) & 0xFF == ord("d"):
