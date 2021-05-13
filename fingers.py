@@ -50,29 +50,36 @@ while True:
     if landmarkList:
 
         # Checks if y coordinate of tip is below (Also only compatible with right hand)
-        fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
-        fingers += [1 if landmarkList[tipIds[id]][2] <
-                    landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
+        # fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
+        # fingers += [1 if landmarkList[tipIds[id]][2] <
+        #             landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
         # Second hand check
         if len(landmarkList) > 21:
-            fingers += [1 if (landmarkList[24][1] >
-                              landmarkList[23][1]) else 0]
+            fingers = [1 if (landmarkList[4][1] < landmarkList[3][1]) else 0]
+            fingers += [1 if landmarkList[tipIds[id]][2] <
+                        landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
+            fingers += [1 if (landmarkList[24][1] <
+                              landmarkList[25][1]) else 0]
             fingers += [1 if landmarkList[tipIds2[id]+20][2] <
                         landmarkList[tipIds2[id]+18][2] else 0 for id in range(1, 5)]
-    print(fingers)
+        else:
+            fingers = [1 if (landmarkList[4][1] > landmarkList[3][1]) else 0]
+            fingers += [1 if landmarkList[tipIds[id]][2] <
+                        landmarkList[tipIds[id]-2][2] else 0 for id in range(1, 5)]
+    # print(fingers)
 
     currTime = time.time()
     fps = 1/(currTime-prevTime)
     prevTime = currTime
 
-    cv.putText(frame, "Start with right hand first", (20, 50),
-               cv.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 0), 1)
-    cv.putText(frame, "(Yes I know second hand is broken)", (20, 80),
-               cv.FONT_HERSHEY_PLAIN, .7, (255, 0, 0), 1)
-    cv.putText(frame, f"FPS:{int(fps)}", (440, 50),
-               cv.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 1)
-    cv.putText(frame, f"Fingers Open: {len([i for i in fingers if i==1])}", (440, 100),
-               cv.FONT_HERSHEY_PLAIN, 1.3, (255, 0, 0), 1)
+    cv.putText(frame, "Start with right hand first", (5, 20),
+               cv.FONT_HERSHEY_DUPLEX, .7, (0, 0, 0), 2)
+    cv.putText(frame, "(Palm outwards)", (5, 50),
+               cv.FONT_HERSHEY_DUPLEX, .6, (0, 0, 0), 1)
+    cv.putText(frame, f"FPS:{int(fps)}", (560, 20),
+               cv.FONT_HERSHEY_DUPLEX, .5, (0, 0, 0), 1)
+    cv.putText(frame, f"Fingers Open: {len([i for i in fingers if i==1])}", (420, 50),
+               cv.FONT_HERSHEY_DUPLEX, .8, (26, 51, 0), 2)
     cv.imshow("Video", frame)
 
     if cv.waitKey(1) & 0xFF == ord("d"):
