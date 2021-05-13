@@ -46,7 +46,6 @@ while True:
     # print(landmarkList)
 
     fingers = []
-    calc = []
     entry1 = 0
     entry2 = 0
 
