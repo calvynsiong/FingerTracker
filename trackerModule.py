@@ -57,6 +57,7 @@ class Detector():
 
         return landmarkList
 
+            # To track 2 hands, replace myHand with ==> for myHand in self.results.multi_hand_landmarks:
 
 def main():
 
